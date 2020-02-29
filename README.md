@@ -42,5 +42,4 @@ Output:
 
 `
 {"timestamp":"2020-02-29T18:42:46.390Z","level":"INFO","function":"github.com/fernhtls/logsimple.TestLogSimple","file":"/home/fernando/go/src/github.com/fernhtls/logsimple/logsimple_test.go:22","msg":"Hey I'm logging info to my app!"}
-
 `
