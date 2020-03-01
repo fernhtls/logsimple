@@ -1,7 +1,6 @@
 package logsimple
 
 import (
-	"log"
 	"testing"
 )
 
@@ -9,7 +8,7 @@ import (
 func TestLogSimple(t *testing.T) {
 	// Logger with String format
 	var loggerS Logger
-	loggerS.DateFormat = "2006-01-02T15:04:05.000Z"
+	loggerS.DateFormat = "2006-01-02T15:04:05.000 MST"
 	loggerS.Init()
 	loggerS.Info("Test INFO message")
 	loggerS.Warning("Test WARN message")
@@ -35,9 +34,9 @@ func TestLogSimple(t *testing.T) {
 	// Testing the setDateFormat function
 	var loggerDFError Logger
 	loggerDFError.DateFormat = "2006-01-02T15:04:AA.000Z"
+	loggerDFError.Init()
 	// Calling setDateFormat
-	log.Println("Calling setDateFormat")
-	loggerDFError.setDateFormat()
+	loggerDFError.Info("Test incorret Date format")
 	// Not including the FATAL message on unittest as it aborts the execution
 	t.Log("No errors on execution of the test")
 }

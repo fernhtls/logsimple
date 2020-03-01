@@ -36,34 +36,45 @@ func (l *Logger) Init() {
 	// Initializing a new logger without a prefix
 	l.Log = log.New(os.Stdout, "", 0)
 	// Initialize date format
-	l.setDateFormat()
+	originalDateFormat, setDefaultDateFormat := l.setDateFormat()
 	// Initialize format
-	l.setLogFormat()
+	setDefaultLogFormat := l.setLogFormat()
+	// Show if default sets were applied
+	if setDefaultDateFormat {
+		l.Info("Invalid date format, check the format:" + originalDateFormat)
+	}
+	if setDefaultLogFormat {
+		l.Info("You didn't pass a valid LogFormat [LogFormatString, LogFormatJSON]")
+		l.Info("LogFormatString will be used as default")
+	}
 }
 
-func (l *Logger) setLogFormat() {
+func (l *Logger) setLogFormat() bool {
 	switch l.LogFormat {
 	case LogFormatString:
 		logFormat = logFormatString
+		return false
 	case LogFormatJSON:
 		logFormat = logFormatJSON
+		return false
 	default:
-		log.Println("You didn't pass a valid LogFormat [LogFormatString, LogFormatJSON]")
-		log.Println("LogFormatString will be used as default")
 		logFormat = logFormatString
+		return true
 	}
 }
 
-func (l *Logger) setDateFormat() {
+func (l *Logger) setDateFormat() (string, bool) {
+	originalDateFormat := l.DateFormat
 	t := time.Now()
 	ts := t.Format(l.DateFormat)
 	// Transforming ts back in time to test the Format
-	tts, err := time.Parse(l.DateFormat, ts)
-	if tts != t || err != nil {
-		log.Println("Invalid date format, check the format:", l.DateFormat)
+	tts, err := time.ParseInLocation(l.DateFormat, ts, t.Location())
+	if !t.Round(time.Second).Equal(tts.Round(time.Second)) || err != nil {
 		// Setting the default format
-		l.DateFormat = "2006-01-02T15:04:05.000Z"
+		l.DateFormat = "2006-01-02T15:04:05.000 MST"
+		return originalDateFormat, true
 	}
+	return "", false
 }
 
 // Info : Logs the message as INFO level
@@ -87,7 +98,7 @@ func (l *Logger) Error(msg interface{}) {
 	l.Log.Printf(logFormat, time.Now().Format(l.DateFormat), "ERROR", funcDetail.Name(), file, line, msg)
 }
 
-// Fatal : Logs the message as FATAL and kills the process
+// Fatal : Logs the message as FATAL and kills the process if abort is true
 func (l *Logger) Fatal(msg interface{}, abort bool) {
 	pc, file, line, _ := runtime.Caller(1)
 	funcDetail := runtime.FuncForPC(pc)
