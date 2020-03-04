@@ -45,3 +45,5 @@ Output:
 `
 
 Adding new tag for version v1.0.1
+
+Adding new tag for version v1.0.2
