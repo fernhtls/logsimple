@@ -56,7 +56,7 @@ func (l *Logger) setFormats() {
 	ts := t.Format(l.DateFormat)
 	// Transforming ts back in time to test the Format
 	tts, err := time.Parse(l.DateFormat, ts)
-	if tts != t || err != nil {
+	if t.Equal(tts) || err != nil {
 		// Setting the default format if gthe format is not valid
 		l.DateFormat = "2006-01-02T15:04:05.000Z"
 		defaultDateFormat = true
