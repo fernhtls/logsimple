@@ -58,7 +58,7 @@ func (l *Logger) setFormats() {
 	tts, err := time.Parse(l.DateFormat, ts)
 	if tts.Round(time.Second).Before(t.Round(time.Second)) || err != nil {
 		// Setting the default format if gthe format is not valid
-		l.DateFormat = "2006-01-02T15:04:05.000Z"
+		l.DateFormat = "2006-01-02T15:04:05.000 MST"
 		defaultDateFormat = true
 	}
 	if defaultLogFormat {

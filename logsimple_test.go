@@ -28,7 +28,7 @@ func TestLogSimple(t *testing.T) {
 	loggerS.Error("Test ERROR message")
 	// Logger with JSON format
 	var loggerJ Logger
-	loggerJ.DateFormat = "2006-01-02T15:04:05.000Z"
+	loggerJ.DateFormat = "2006-01-02T15:04:05.000 MST"
 	loggerJ.LogFormat = LogFormatJSON
 	loggerJ.Init()
 	loggerJ.Info("Hey I'm logging info to my app!")
@@ -38,7 +38,7 @@ func TestLogSimple(t *testing.T) {
 	// Getting the default log Format
 	// Logger with String format as the default
 	var loggerD Logger
-	loggerD.DateFormat = "2006-01-02T15:04:05.000Z"
+	loggerD.DateFormat = "2006-01-02T15:04:05.000 MST"
 	loggerD.LogFormat = 10
 	loggerD.Init()
 	loggerD.Info("Hey I'm logging info to my app!")
@@ -46,7 +46,7 @@ func TestLogSimple(t *testing.T) {
 	loggerD.Error("Test ERROR message")
 	// Testing the setDateFormat function
 	var loggerDFError Logger
-	loggerDFError.DateFormat = "2006-01-02T15:04:AA.000Z"
+	loggerDFError.DateFormat = "2006-01-02T15:04:AA.000 MST"
 	loggerDFError.Init()
 	// Calling setDateFormat
 	loggerDFError.Info("Test incorret Date format")
