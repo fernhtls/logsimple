@@ -11,6 +11,14 @@ import (
 
 // TestLogSimple : Simple test for Logging
 func TestLogSimple(t *testing.T) {
+	// Logger no DateFormat
+	// Logger with String format
+	var loggerND Logger
+	// loggerS.DateFormat = "2006-01-02T15:04:05.000 MST"
+	loggerND.Init()
+	loggerND.Info("Test INFO message")
+	loggerND.Warning("Test WARN message")
+	loggerND.Error("Test ERROR message")
 	// Logger with String format
 	var loggerS Logger
 	loggerS.DateFormat = "2006-01-02T15:04:05.000 MST"
