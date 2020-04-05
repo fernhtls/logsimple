@@ -1,6 +1,7 @@
 package logsimple
 
 import (
+	"fmt"
 	"log"
 	"os"
 	"runtime"
@@ -66,7 +67,7 @@ func (l *Logger) setFormats() {
 		l.Info("Value passed as log format was invalid [not logFormatString or logFormatJSON]")
 	}
 	if defaultDateFormat {
-		l.Info("Using the default date format \"2006-01-02T15:04:05.000Z\" as the date format passed was invalid or blank")
+		l.Info(fmt.Sprintf("Using the default date format \"%v\" as the date format passed was invalid or blank", l.DateFormat))
 	}
 }
 
