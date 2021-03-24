@@ -13,41 +13,40 @@ import (
 func TestLogSimple(t *testing.T) {
 	// Logger no DateFormat
 	// Logger with String format
-	var loggerND Logger
+	loggerND := NewLogger().Init()
 	// loggerS.DateFormat = "2006-01-02T15:04:05.000 MST"
-	loggerND.Init()
 	loggerND.Info("Test INFO message")
 	loggerND.Warning("Test WARN message")
 	loggerND.Error("Test ERROR message")
 	// Logger with String format
-	var loggerS Logger
-	loggerS.DateFormat = "2006-01-02T15:04:05.000 MST"
-	loggerS.Init()
+	loggerS := NewLogger().
+		SetDateFormat("2006-01-02T15:04:05.000 MST").
+		Init()
 	loggerS.Info("Test INFO message")
 	loggerS.Warning("Test WARN message")
 	loggerS.Error("Test ERROR message")
-	// Logger with JSON format
-	var loggerJ Logger
-	loggerJ.DateFormat = "2006-01-02T15:04:05.000 MST"
-	loggerJ.LogFormat = LogFormatJSON
-	loggerJ.Init()
+	//// Logger with JSON format
+	loggerJ := NewLogger().
+		SetDateFormat("2006-01-02T15:04:05.000 MST").
+		SetLogFormat(LogFormatJSON).
+		Init()
 	loggerJ.Info("Hey I'm logging info to my app!")
 	loggerJ.Warning("Test WARN message")
 	loggerJ.Error("Test ERROR message")
 	loggerJ.Fatal(false, "Test ERROR message")
-	// Getting the default log Format
-	// Logger with String format as the default
-	var loggerD Logger
-	loggerD.DateFormat = "2006-01-02T15:04:05.000 MST"
-	loggerD.LogFormat = 10
-	loggerD.Init()
+	//// Getting the default log Format
+	//// Logger with String format as the default
+	loggerD := NewLogger().
+		SetDateFormat("2006-01-02T15:04:05.000 MST").
+		SetLogFormat(10).
+		Init()
 	loggerD.Info("Hey I'm logging info to my app!")
 	loggerD.Warning("Test WARN message")
 	loggerD.Error("Test ERROR message")
-	// Testing the setDateFormat function
-	var loggerDFError Logger
-	loggerDFError.DateFormat = "2006-01-02T15:04:AA.000 MST"
-	loggerDFError.Init()
+	//// Testing the setDateFormat function
+	loggerDFError := NewLogger().
+		SetDateFormat("2006-01-02T15:04:AA.000 MST").
+		Init()
 	// Calling setDateFormat
 	loggerDFError.Info("Test incorret Date format")
 	t.Log("No errors on execution of the test")
@@ -58,8 +57,7 @@ func TestAbort(t *testing.T) {
 	// only when it reaches cmd.Run()
 	// Otherwise abort would run in the begining of the test
 	if os.Getenv("RUN_ABORT") == "1" {
-		var loggerFatal Logger
-		loggerFatal.Init()
+		loggerFatal := NewLogger().Init()
 		loggerFatal.Fatal(true, "Abort!")
 		return
 	}
