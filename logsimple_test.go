@@ -55,7 +55,7 @@ func TestLogSimple(t *testing.T) {
 func TestAbort(t *testing.T) {
 	// Env var used to run abort only in the subprocess
 	// only when it reaches cmd.Run()
-	// Otherwise abort would run in the begining of the test
+	// Otherwise abort would run in the beginning of the test
 	if os.Getenv("RUN_ABORT") == "1" {
 		loggerFatal := NewLogger().Init()
 		loggerFatal.Fatal(true, "Abort!")
