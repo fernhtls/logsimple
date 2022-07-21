@@ -4,7 +4,7 @@
 
 Simple log for Go with methods like Info, Warn, Error, Fatal
 
-### Isntructions
+### Instructions
 
 Create a new logger, change the DateFormat or LogFormat (optional)
 

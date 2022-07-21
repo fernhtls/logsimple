@@ -27,13 +27,13 @@ func TestLogSimple(t *testing.T) {
 	loggerS.Error("Test ERROR message")
 	//// Logger with JSON format
 	loggerJ := NewLogger().
-		SetDateFormat("2006-01-02T15:04:05.000 MST").
+		SetDateFormat("2006-01-02T15:04:05.000").
 		SetLogFormat(LogFormatJSON).
 		Init()
 	loggerJ.Info("Hey I'm logging info to my app!")
 	loggerJ.Warning("Test WARN message")
 	loggerJ.Error("Test ERROR message")
-	loggerJ.Fatal(false, "Test ERROR message")
+	loggerJ.Fatal(false, "Test FATAL message")
 	//// Getting the default log Format
 	//// Logger with String format as the default
 	loggerD := NewLogger().
