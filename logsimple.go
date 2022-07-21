@@ -1,4 +1,4 @@
-package logsimple
+ package logsimple
 
 import (
 	"fmt"
@@ -45,7 +45,7 @@ func (l *Logger) SetDateFormat(dateFormat string) *Logger {
 }
 
 // SetLogFormat : Sets the log format for the builder
-func (l *Logger) SetLogFormat(logFormat logFormat) * Logger {
+func (l *Logger) SetLogFormat(logFormat logFormat) *Logger {
 	l.logFormat = logFormat
 	return l
 }
