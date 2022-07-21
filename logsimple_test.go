@@ -49,7 +49,11 @@ func TestLogSimple(t *testing.T) {
 		Init()
 	// Calling setDateFormat
 	loggerDFError.Info("Test incorret Date format")
+	// Printing logging formats
+	t.Log(loggerDFError.GetDateFormat())
+	t.Log(loggerDFError.GetLogFormat())
 	t.Log("No errors on execution of the test")
+
 }
 
 func TestAbort(t *testing.T) {
