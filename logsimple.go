@@ -1,4 +1,4 @@
- package logsimple
+package logsimple
 
 import (
 	"fmt"
@@ -10,8 +10,12 @@ import (
 
 // Constants with the log Formats
 const (
-	logFormatString string = `[%s] [%s] [%s] [%s:%v] [%s]`
-	logFormatJSON   string = `{"timestamp":"%s","level":"%s","function":"%s","file":"%s:%v","msg":"%s"}`
+	logFormatString string = `[%s] [%s/%s] [%s] [%s:%v] [%s]`
+	logFormatJSON   string = `{"timestamp":"%s","level":"%s","severity",:"%s",function":"%s","file":"%s:%v","message":"%s"}`
+	INFO            string = "INFO"
+	WARN            string = "WARN"
+	ERROR           string = "ERROR"
+	FATAL           string = "FATAL"
 )
 
 type logFormat int
@@ -55,7 +59,7 @@ func (l *Logger) GetDateFormat() string {
 	return l.dateFormat
 }
 
-// GetDateFormat : Returns dateFormat
+// GetLogFormat : Returns dateFormat
 func (l *Logger) GetLogFormat() string {
 	switch l.logFormat {
 	case LogFormatString:
@@ -112,21 +116,21 @@ func (l *Logger) setFormats() {
 func (l *Logger) Info(msg interface{}) {
 	pc, file, line, _ := runtime.Caller(1)
 	funcDetail := runtime.FuncForPC(pc)
-	l.log.Printf(l.logFormatInternal, time.Now().Format(l.dateFormat), "INFO", funcDetail.Name(), file, line, msg)
+	l.log.Printf(l.logFormatInternal, time.Now().Format(l.dateFormat), INFO, INFO, funcDetail.Name(), file, line, msg)
 }
 
 // Warning : Logs the msg as WARN level
 func (l *Logger) Warning(msg interface{}) {
 	pc, file, line, _ := runtime.Caller(1)
 	funcDetail := runtime.FuncForPC(pc)
-	l.log.Printf(l.logFormatInternal, time.Now().Format(l.dateFormat), "WARN", funcDetail.Name(), file, line, msg)
+	l.log.Printf(l.logFormatInternal, time.Now().Format(l.dateFormat), WARN, WARN, funcDetail.Name(), file, line, msg)
 }
 
 // Error : Logs the message as ERROR level - but does not kill or error the process
 func (l *Logger) Error(msg interface{}) {
 	pc, file, line, _ := runtime.Caller(1)
 	funcDetail := runtime.FuncForPC(pc)
-	l.log.Printf(l.logFormatInternal, time.Now().Format(l.dateFormat), "ERROR", funcDetail.Name(), file, line, msg)
+	l.log.Printf(l.logFormatInternal, time.Now().Format(l.dateFormat), ERROR, ERROR, funcDetail.Name(), file, line, msg)
 }
 
 // Fatal : Logs the message as FATAL and kills the process
@@ -134,7 +138,7 @@ func (l *Logger) Fatal(abort bool, msg interface{}) {
 	pc, file, line, _ := runtime.Caller(1)
 	funcDetail := runtime.FuncForPC(pc)
 	if abort {
-		l.log.Fatalf(l.logFormatInternal, time.Now().Format(l.dateFormat), "FATAL", funcDetail.Name(), file, line, msg)
+		l.log.Fatalf(l.logFormatInternal, time.Now().Format(l.dateFormat), FATAL, FATAL, funcDetail.Name(), file, line, msg)
 	}
-	l.log.Printf(l.logFormatInternal, time.Now().Format(l.dateFormat), "FATAL", funcDetail.Name(), file, line, msg)
+	l.log.Printf(l.logFormatInternal, time.Now().Format(l.dateFormat), FATAL, FATAL, funcDetail.Name(), file, line, msg)
 }
